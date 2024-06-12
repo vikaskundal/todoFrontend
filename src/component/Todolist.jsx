@@ -31,7 +31,7 @@ export const TodoList=({todos,addTodo,deleteTodo,changeColor})=>{
     
     
     return (
-        <div className="p-1 flex space-x-1 h-screen">{/*this is the main div*/}
+        <div className="p-1 flex space-x-2 h-screen">{/*this is the main div*/}
             <div  className="w-3/10 bg-red-100 flex flex-col justify-start items-center rounded-lg ">{/*Add you Todo and inputs*/}
                 <div className="font-serif fond-medium m-2 p-2 bg-blue-500 rounded-lg shadow-lg">
                         <h2>Add You Todo</h2>
