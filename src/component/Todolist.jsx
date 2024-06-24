@@ -13,6 +13,7 @@ export const TodoList=({todos,addTodo,deleteTodo,changeColor})=>{
         const newTodo= createTodo(title,description,time,date);
         if(!title|| !description || !time|| !date){
             alert('please enter all the fields')
+            
         }else{
         addTodo(newTodo);
         clearInputs();
