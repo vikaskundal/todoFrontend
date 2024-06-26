@@ -1,8 +1,9 @@
+import { v4 as uuidv4 } from 'uuid';
 
 
 export const createTodo=(title,description,time,date)=>{
     return{
-        id:Math.random(),
+        id:uuidv4(),
         title,
         description,
         time,
