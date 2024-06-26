@@ -6,7 +6,7 @@ export const TodoList=({todos,addTodo,deleteTodo,changeColor})=>{
     const [description,setDescription]=useState("");
     const [date,setDate]=useState("");
     const [time,setTime]=useState("");
-    
+        
 
     
     const handleAddTodo=()=>{
@@ -32,12 +32,13 @@ export const TodoList=({todos,addTodo,deleteTodo,changeColor})=>{
     
     
     return (
-        <div className="p-1 flex space-x-2 h-screen">{/*this is the main div*/}
-            <div  className="w-3/10 bg-red-100 flex flex-col justify-start items-center rounded-lg ">{/*Add you Todo and inputs*/}
+        <div className="p-1 flex flex-col  space-x-2 h-screen md:flex-row">{/*this is the main div*/}
+            <div  className="w-full bg-red-100 flex flex-col   justify-start items-center rounded-lg md:w-3/10  ">{/*Add you Todo and inputs*/}
                 <div className="font-serif fond-medium m-2 p-2 bg-blue-500 rounded-lg shadow-lg">
                         <h2>Add You Todo</h2>
                 </div>
-               <div className="flex flex-col items-center w-full p-2">{/*inputs*/}
+                {/*make this input to the burger menu once it comes sd */}
+               <div className="flex flex-col items-center w-full p-2  ">{/*inputs*/}
                         <input className="mb-2 p-2 border border-gray-400 rounded-lg w-full hover:shadow-glow" type="text" placeholder="Title" required
                          value={title}
                          onChange={(e)=>setTitle(e.target.value)}  />
@@ -64,7 +65,7 @@ export const TodoList=({todos,addTodo,deleteTodo,changeColor})=>{
                         </div>
                 </div>
             </div>
-            <div className="w-7/10 bg-blue-100 rounded-lg flex flex-col ">{/*work todo and Todolist*/}
+            <div className="w-7/10 bg-blue-100 rounded-lg flex flex-col w-full ">{/*work todo and Todolist*/}
                 <div className="font-serif fond-medium m-2 p-2 bg-blue-500 rounded-lg shadow-lg flex justify-center">
                             <h1>Work to do</h1>
                 </div>
