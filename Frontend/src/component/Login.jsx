@@ -1,87 +1,73 @@
 import { useState } from "react" 
 import axios  from "axios";
 
-
-
-
 export const  Login=({onLogin,onCancel})=>{
-    const [username,setUsername]=useState('');
+    const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const [error,setError]=useState('');
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     const handleLogIn= async(e)=>{
         e.preventDefault();
-        localStorage.setItem('user',JSON.stringify(username));
-        // 
+        setError('');
+        if (!emailRegex.test(email)) {
+            setError('Please enter a valid email address');
+            return;
+        }
+        localStorage.setItem('user',JSON.stringify(email));
         try{
-            const response= await axios.post('http://localhost:8000/auth/login',{username,password});
+            const response= await axios.post('http://localhost:8000/auth/login',{email,password});
             const token=response.data.data;
             // set the token in the local storage
             localStorage.setItem('token',token);
-            
-            
-            // once login call the onLogin function which changes the login to logout
             onLogin();
-
-
             console.log('login successfull')
-
-
         }catch(error){
-            setError('Invalid username or password try again')
+            setError(error?.response?.data?.message || 'Invalid email or password, try again');
             console.log('error while login',error);
-
         }
     }
 
-    
     return <>
         {/* login details */}
-            <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50">
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                     <form onSubmit={handleLogIn} 
-                    className="bg-red-300 flex flex-col items-center w-50 p-2 w-2/5 h-50 border solid black rounded-lg  ">
-                        <h1 className="italic font-medium text-lg p-2 ">
-                            LogIn To Your Account
+                    className="bg-primary-card dark:bg-dark-card flex flex-col items-center w-96 p-6 border-none rounded-xl shadow-2xl">
+                        <h1 className="font-semibold text-xl p-2 text-primary-dark dark:text-dark-text mb-4">
+                            Login To Your Account
                         </h1>
                     {/*if user put the wrong password and username error will appear in good format*/}
-                        {error && <p className="text-red-500 mb-2">{error}</p>}
+                        {error && <p className="text-primary-red dark:text-dark-red mb-4 text-center">{error}</p>}
                         <input
-                        className="flex p-2 m-1 border black solid rounded-lg "
-                        type="text"
-                        placeholder="Username"
+                        className="w-full p-3 m-2 border border-primary-accent dark:border-dark-accent rounded-lg bg-white dark:bg-dark-gray text-primary-dark dark:text-dark-text focus:ring-2 focus:ring-primary-accent dark:focus:ring-dark-accent"
+                        type="email"
+                        placeholder="Email"
                         required
+                        value={email}
                         onChange={((e)=>{
-                            setUsername(e.target.value)
-                        })
-                        }/>
+                            setEmail(e.target.value)
+                        })}
+                        />
                         <input
-                        className="flex flex p-2 m-1 border black solid rounded-lg"
+                        className="w-full p-3 m-2 border border-primary-accent dark:border-dark-accent rounded-lg bg-white dark:bg-dark-gray text-primary-dark dark:text-dark-text focus:ring-2 focus:ring-primary-accent dark:focus:ring-dark-accent"
                         type="password"
                         placeholder="Password"
                         onChange={((e)=>{
                             setPassword(e.target.value)
                         })}
                         required/>
-                        <div className="flex flex-raw space-x-2 m-4">
+                        <div className="flex flex-row space-x-3 m-4 w-full">
                         <button
-                        className="flex bg-green-300 p-2 border solid black rounded-lg"
+                        className="flex-1 bg-primary-green dark:bg-dark-green text-primary-dark dark:text-dark-text p-3 border-none rounded-lg hover:bg-green-500 dark:hover:bg-green-600 transition-colors"
                         type='submit'
                         >Login</button>
                         <button
-                        className="flex bg-red-500 p-2 border solid black rounded-lg"
+                        className="flex-1 bg-primary-red dark:bg-dark-red text-white p-3 border-none rounded-lg hover:bg-red-400 dark:hover:bg-red-500 transition-colors"
                         onClick={onCancel}
                         > Cancel</button>
                         </div>
-
-
-
                     </form>
             </div>
-
-    
     </>
-
 }
-
-
-//
